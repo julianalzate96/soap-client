@@ -7,7 +7,6 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/test" element={<Test />} />
         <Route path="/service" element={<Service />} />
       </Routes>
     </Router>
@@ -16,22 +15,18 @@ export default function App() {
 
 function Service() {
   const [response, setResponse] = useState(null);
+  const [xml, setXML] = useState(null);
 
   useEffect(() => {
     soap({
-      url: "http://192.168.1.6:80/test/index.php?wsdl",
-      method: "saludar",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-
-      data: {
-        name: "Remy Blom",
-      },
+      url: "http://localhost/servicios_web/pub_plan_estudio.php?wsdl",
+      method: "swTitulos",
+      headers: { "Content-Type": "application/xml" },
+      data: {},
 
       success: function (soapResponse) {
-        console.log("RES: ", soapResponse.toXML());
         setResponse(soapResponse.toXML());
+        setXML(soapResponse.toString());
       },
       error: function (SOAPResponse) {
         console.log("ERROR: ", SOAPResponse);
@@ -39,15 +34,16 @@ function Service() {
     });
   }, []);
 
-  return <div className="App"></div>;
-}
-
-function Test() {
-  const xml = `<note>
+  /* const xml = `<note>
   <to>Tove</to>
   <from>Jani</from>
   <heading>Reminder</heading>
   <body>Don't forget me this weekend!</body>
-  </note>`;
-  return <XMLViewer xml={xml} collapsible />;
+  </note>`; */
+
+  if (xml) {
+    return <XMLViewer xml={xml} collapsible />;
+  }
+
+  return <div className="App"></div>;
 }
