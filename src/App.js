@@ -19,7 +19,7 @@ function Service() {
 
   useEffect(() => {
     soap({
-      url: "http://localhost/servicios_web/pub_plan_estudio.php?wsdl",
+      url: "https://frozen-river-98217.herokuapp.com/pub_plan_estudio.php?wsdl",
       method: "swTitulos",
       headers: { "Content-Type": "application/xml" },
       data: {},
@@ -33,13 +33,6 @@ function Service() {
       },
     });
   }, []);
-
-  /* const xml = `<note>
-  <to>Tove</to>
-  <from>Jani</from>
-  <heading>Reminder</heading>
-  <body>Don't forget me this weekend!</body>
-  </note>`; */
 
   if (xml) {
     return <XMLViewer xml={xml} collapsible />;
