@@ -84,7 +84,7 @@ export default function Services() {
       {renderServices()}
       {showModal && (
         <Modal
-          service={selectedService}
+          selectedService={selectedService}
           setShowModal={() => setShowModal(false)}
         />
       )}
