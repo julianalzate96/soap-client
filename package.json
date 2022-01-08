@@ -6,14 +6,18 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.24.0",
     "jquery.soap": "^1.7.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-xml-viewer": "^1.3.0",
+    "sass": "^1.47.0",
     "soap-everywhere": "^1.0.7",
-    "web-vitals": "^1.1.2"
+    "strong-soap": "^3.3.1",
+    "web-vitals": "^1.1.2",
+    "xml-parse-from-string": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
