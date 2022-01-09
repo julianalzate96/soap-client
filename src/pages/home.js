@@ -1,30 +1,34 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 
-import ServiceContext from "../context/serviceContext";
 import CategoriesContext from "../context/categoriesContext";
+import Layout from "../components/Layout";
+import Card from "../components/Card";
 
 export default function Home() {
   const { categories } = useContext(CategoriesContext);
-  const { setService } = useContext(ServiceContext);
-
-  const handleOnClick = (wsdl, name, id) => {
-    setService({ wsdl, name, id });
-  };
 
   const renderServices = () => {
     return categories.map((category, i) => (
-      <Link
-        key={i}
-        to={`/${category.nombre.replace(/\s/g, "-").toLowerCase()}`}
-        onClick={() =>
-          handleOnClick(category.wsdl, category.nombre, category.id_categoria)
-        }
-      >
-        {category.nombre}
-      </Link>
+      <Card key={i} category={category} />
     ));
   };
 
-  return <div>{renderServices()}</div>;
+  return (
+    <Layout>
+      <div>
+        <p>
+          Los Servicios Web de{" "}
+          <strong>
+            Área de Programas Informáticos y de Telecomunicaciones
+          </strong>{" "}
+          del <strong>Politécnico Colombiano Jaime Isaza Cadavid</strong> no
+          precisan de ningún usuario y contraseña para acceder a ellos. Estos
+          devuelven información pública y accesible por toda la comunidad y que
+          se puede encontrar en el sitio web institucional.
+        </p>
+        <p>Estos estan ordenados en las siguientes Secciones:</p>
+      </div>
+      <div className="categories-container">{renderServices()}</div>
+    </Layout>
+  );
 }

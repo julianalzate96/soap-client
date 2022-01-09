@@ -4,6 +4,8 @@ import soap from "soap-everywhere";
 import { fetchServicesInfo } from "../api";
 import ServiceContext from "../context/serviceContext";
 import Modal from "../components/Modal";
+import Layout from "../components/Layout";
+import ServiceCard from "../components/Card/ServiceCard";
 
 export default function Services() {
   const { service } = useContext(ServiceContext);
@@ -59,10 +61,11 @@ export default function Services() {
   const renderServices = () => {
     return services.map((service, i) => {
       return (
-        <div key={i} onClick={() => handleSelectedService(service)}>
-          <span>{service.name}</span>
-          <span>{service.description}</span>
-        </div>
+        <ServiceCard
+          key={i}
+          onClick={() => handleSelectedService(service)}
+          service={service}
+        />
       );
     });
   };
@@ -72,22 +75,24 @@ export default function Services() {
   }, [service]);
 
   return (
-    <div>
-      {busy && (
-        <span>Cargando los servicios de la categoria {service.name}...</span>
-      )}
-      {error && (
-        <span>
-          Error al cargar los servicios de la categoria {service.name}.
-        </span>
-      )}
-      {renderServices()}
-      {showModal && (
-        <Modal
-          selectedService={selectedService}
-          setShowModal={() => setShowModal(false)}
-        />
-      )}
-    </div>
+    <Layout>
+      <div>
+        {busy && (
+          <span>Cargando los servicios de la categoria {service.name}...</span>
+        )}
+        {error && (
+          <span>
+            Error al cargar los servicios de la categoria {service.name}.
+          </span>
+        )}
+        <div className="services-container">{renderServices()}</div>
+        {showModal && (
+          <Modal
+            selectedService={selectedService}
+            setShowModal={() => setShowModal(false)}
+          />
+        )}
+      </div>
+    </Layout>
   );
 }

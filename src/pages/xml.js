@@ -9,7 +9,6 @@ const customTheme = {
 
 export default function Xml() {
   const { service } = useContext(ServiceContext);
-  console.log(service.currentXML);
   return (
     <XMLViewer
       xml={service.currentXML}
