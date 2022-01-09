@@ -78,16 +78,23 @@ export default function Services() {
     fetchCurrentCategoryServices(service);
   }, [service]);
 
+  console.log(service);
+
   return (
     <Layout>
+      <h1>{service.name}</h1>
+      <a href={service.wsdl}>{service.wsdl}</a>
+      <p>{service.description}</p>
       <div className="container">
-        {busy && <Lottie className="loading" animationData={Loading} />}
         {error && (
           <span>
             Error al cargar los servicios de la categoria {service.name}.
           </span>
         )}
-        <div className="services-container">{renderServices()}</div>
+        {busy && <Lottie className="loading" animationData={Loading} />}
+        {!busy && !error && (
+          <div className="services-container">{renderServices()}</div>
+        )}
         {showModal && (
           <Modal
             selectedService={selectedService}
