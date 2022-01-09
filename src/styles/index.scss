@@ -1,0 +1,28 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Rubik";
+}
+
+.categories-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 0;
+}
+
+.services-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #196844;
+}
+
+a:hover {
+  color: #196844;
+}
