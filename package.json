@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "jquery.soap": "^1.7.3",
+    "lottie-react": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.0.2",
@@ -17,7 +18,8 @@
     "soap-everywhere": "^1.0.7",
     "strong-soap": "^3.3.1",
     "web-vitals": "^1.1.2",
-    "xml-parse-from-string": "^1.0.1"
+    "xml-parse-from-string": "^1.0.1",
+    "xml2json": "^0.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
