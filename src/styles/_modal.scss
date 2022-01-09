@@ -11,9 +11,24 @@
   bottom: 0;
   background-color: "red";
   z-index: 100;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
 
   .body {
-    border: 1px solid red;
+    // border: 1px solid red;
     max-width: 1110px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+
+    .xml-container {
+      margin-bottom: 30px;
+      .text {
+        margin-bottom: 10px;
+      }
+      .xml {
+        background-color: gainsboro;
+      }
+    }
   }
 }

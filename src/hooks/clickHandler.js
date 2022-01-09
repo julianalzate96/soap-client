@@ -21,7 +21,11 @@ function ClickHandler(props) {
   const wrapperRef = useRef(null);
   useClickHandler(wrapperRef, props.action);
 
-  return <div ref={wrapperRef}>{props.children}</div>;
+  return (
+    <div className="click-handler" ref={wrapperRef}>
+      {props.children}
+    </div>
+  );
 }
 
 export default ClickHandler;

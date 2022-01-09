@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  margin-bottom: 30px;
+
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    label {
+      margin-right: 5px;
+    }
+  }
+
+  button {
+    margin-top: 10px;
+    width: 100px;
+  }
+}

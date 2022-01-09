@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import _soap from "jquery.soap";
 import XMLViewer from "react-xml-viewer";
 // import parseXML from "xml-parse-from-string";
@@ -14,7 +15,7 @@ const customTheme = {
 };
 
 export default function Modal({ selectedService, setShowModal }) {
-  const { service } = useContext(serviceContext);
+  const { service, setService } = useContext(serviceContext);
   const [response, setResponse] = useState({ response: null, xml: "" });
 
   const onSubmit = (e) => {
@@ -39,6 +40,10 @@ export default function Modal({ selectedService, setShowModal }) {
       headers: { "Content-Type": "application/xml" },
       data,
       success: function (soapResponse) {
+        setService((prev) => ({
+          ...prev,
+          currentXML: soapResponse.toString(),
+        }));
         setResponse({
           response: soapResponse.toXML(),
           xml: soapResponse.toString(),
@@ -62,9 +67,10 @@ export default function Modal({ selectedService, setShowModal }) {
         );
       });
     } else {
-      return <input type="text" disabled />;
+      return <span>Este servicio no requiere parametros de entrada.</span>;
     }
   };
+
   return (
     <Layout>
       <ClickHandler action={setShowModal}>
@@ -72,30 +78,35 @@ export default function Modal({ selectedService, setShowModal }) {
           <h3>{selectedService.name}</h3>
           <p>{selectedService.description}</p>
           <Form onSubmit={onSubmit}>{renderInputs()}</Form>
-          {response.response && (
-            <XMLViewer
-              xml={response.xml}
-              theme={customTheme}
-              collapsible
-              indentSize={1}
-            />
-          )}
-          {selectedService.xml_entradas && (
-            <XMLViewer
-              xml={selectedService.xml_entradas}
-              theme={customTheme}
-              collapsible
-              indentSize={1}
-            />
-          )}
-          {selectedService.xml_respuestas && (
-            <XMLViewer
-              xml={selectedService.xml_respuestas}
-              theme={customTheme}
-              collapsible
-              indentSize={1}
-            />
-          )}
+          {response.response && <Link to="/xml">Ver Respuesta en XML</Link>}
+          <div className="xml-container">
+            <p className="text">
+              A continuación se muestra un ejemplo de solicitud en xml
+            </p>
+            {selectedService.xml_entradas && (
+              <XMLViewer
+                className="xml"
+                xml={selectedService.xml_entradas}
+                theme={customTheme}
+                collapsible
+                indentSize={1}
+              />
+            )}
+          </div>
+          <div className="xml-container">
+            <p className="text">
+              A continuación se muestra un ejemplo de respuesta en xml
+            </p>
+            {selectedService.xml_respuestas && (
+              <XMLViewer
+                className="xml"
+                xml={selectedService.xml_respuestas}
+                theme={customTheme}
+                collapsible
+                indentSize={1}
+              />
+            )}
+          </div>
         </div>
       </ClickHandler>
     </Layout>
