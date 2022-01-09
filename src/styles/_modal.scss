@@ -15,16 +15,29 @@
   backdrop-filter: blur(2px);
 
   .body {
-    // border: 1px solid red;
     max-width: 1110px;
     background-color: white;
     padding: 15px;
     border-radius: 10px;
+    position: relative;
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      color: red;
+      cursor: pointer;
+    }
+
+    h2 {
+      color: #196844;
+    }
 
     .xml-container {
       margin-bottom: 30px;
       .text {
         margin-bottom: 10px;
+        font-weight: 700;
       }
       .xml {
         background-color: gainsboro;

@@ -75,13 +75,16 @@ export default function Modal({ selectedService, setShowModal }) {
     <Layout>
       <ClickHandler action={setShowModal}>
         <div className="body">
-          <h3>{selectedService.name}</h3>
+          <span className="close" onClick={setShowModal}>
+            Cerrar
+          </span>
+          <h2>{selectedService.name}</h2>
           <p>{selectedService.description}</p>
           <Form onSubmit={onSubmit}>{renderInputs()}</Form>
           {response.response && <Link to="/xml">Ver Respuesta en XML</Link>}
           <div className="xml-container">
             <p className="text">
-              A continuación se muestra un ejemplo de solicitud en xml
+              A continuación se muestra un ejemplo de solicitud en XML
             </p>
             {selectedService.xml_entradas && (
               <XMLViewer
@@ -95,7 +98,7 @@ export default function Modal({ selectedService, setShowModal }) {
           </div>
           <div className="xml-container">
             <p className="text">
-              A continuación se muestra un ejemplo de respuesta en xml
+              A continuación se muestra un ejemplo de respuesta en XML
             </p>
             {selectedService.xml_respuestas && (
               <XMLViewer
