@@ -9,8 +9,13 @@ import "../../styles/_card.scss";
 function Card({ category }) {
   const { setService } = useContext(ServiceContext);
 
-  const handleOnClick = (wsdl, name, id) => {
-    setService({ wsdl, name, id });
+  const handleOnClick = () => {
+    setService({
+      wsdl: category.wsdl,
+      name: category.nombre,
+      id: category.id_categoria,
+      description: category.descripcion,
+    });
   };
 
   return (
@@ -24,9 +29,7 @@ function Card({ category }) {
       <Link
         className="services-button"
         to={`/${category.nombre.replace(/\s/g, "-").toLowerCase()}`}
-        onClick={() =>
-          handleOnClick(category.wsdl, category.nombre, category.id_categoria)
-        }
+        onClick={handleOnClick}
       >
         Ver Servicios
       </Link>
