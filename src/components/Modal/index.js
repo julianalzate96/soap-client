@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import _soap from "jquery.soap";
 import XMLViewer from "react-xml-viewer";
-// import parseXML from "xml-parse-from-string";
 
 import ClickHandler from "../../hooks/clickHandler";
 import Layout from "./layout";
@@ -16,11 +15,13 @@ const customTheme = {
 
 export default function Modal({ selectedService, setShowModal }) {
   const { service, setService } = useContext(serviceContext);
-  const [response, setResponse] = useState({ response: null, xml: "" });
+  const [response, setResponse] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-
+    setBusy(true);
     let data = {};
 
     if (selectedService.input) {
@@ -40,17 +41,18 @@ export default function Modal({ selectedService, setShowModal }) {
       headers: { "Content-Type": "application/xml" },
       data,
       success: function (soapResponse) {
+        console.log(soapResponse);
         setService((prev) => ({
           ...prev,
           currentXML: soapResponse.toString(),
         }));
-        setResponse({
-          response: soapResponse.toXML(),
-          xml: soapResponse.toString(),
-        });
+        setResponse(soapResponse);
+        setBusy(false);
       },
       error: function (SOAPResponse) {
         console.log("ERROR: ", SOAPResponse);
+        setError(true);
+        setBusy(false);
       },
     });
   };
@@ -80,8 +82,11 @@ export default function Modal({ selectedService, setShowModal }) {
           </span>
           <h2>{selectedService.name}</h2>
           <p>{selectedService.description}</p>
-          <Form onSubmit={onSubmit}>{renderInputs()}</Form>
-          {response.response && <Link to="/xml">Ver Respuesta en XML</Link>}
+          <Form onSubmit={onSubmit} busy={busy}>
+            {renderInputs()}
+          </Form>
+          {response && <Link to="/xml">Ver Respuesta en XML</Link>}
+          {error && <span>Error al probar el servicio.</span>}
           <div className="xml-container">
             <p className="text">
               A continuación se muestra un ejemplo de solicitud en XML
