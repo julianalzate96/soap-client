@@ -4,6 +4,7 @@ const defaultValue = {
   wsdl: "",
   name: "",
   id: null,
+  currentXML: "",
 };
 
 export { defaultValue };

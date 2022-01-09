@@ -8,6 +8,7 @@ import Services from "../pages/services";
 import Home from "../pages/home";
 
 import { fetchServicesInfo } from "../api";
+import Xml from "../pages/xml";
 
 export default function App() {
   const [service, setService] = useState(defaultValue);
@@ -47,6 +48,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             {renderCategoryRoutes()}
+            <Route path="/xml" element={<Xml />} />
           </Routes>
         </ServiceContext.Provider>
       </CategoriesContext.Provider>
