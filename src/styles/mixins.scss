@@ -1,0 +1,14 @@
+@mixin card() {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  box-shadow: 0 5px 10px #888888;
+  border-radius: 10px;
+  transition: transform 0.5s;
+
+  &:hover {
+    transform: scale(1.025);
+  }
+}

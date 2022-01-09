@@ -1,0 +1,10 @@
+@import "../styles/mixins.scss";
+
+.service-card {
+  @include card();
+  cursor: pointer;
+
+  h3 {
+    color: #196844;
+  }
+}
