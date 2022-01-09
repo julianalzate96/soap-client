@@ -1,0 +1,23 @@
+.header {
+  background-color: #196844;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  position: fixed;
+  width: 100%;
+
+  .logo-container {
+    margin-left: 25px;
+    img {
+      width: 300px;
+    }
+  }
+
+  .logo-apit-container {
+    img {
+      height: 100px;
+      width: 100px;
+    }
+  }
+}
