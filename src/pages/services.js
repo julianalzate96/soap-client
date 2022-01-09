@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import soap from "soap-everywhere";
+import Lottie from "lottie-react";
 
 import { fetchServicesInfo } from "../api";
 import ServiceContext from "../context/serviceContext";
 import Modal from "../components/Modal";
 import Layout from "../components/Layout";
 import ServiceCard from "../components/Card/ServiceCard";
+import Loading from "../animations/loading-yellow.json";
+
+import "../styles/index.scss";
 
 export default function Services() {
   const { service } = useContext(ServiceContext);
@@ -76,10 +80,8 @@ export default function Services() {
 
   return (
     <Layout>
-      <div>
-        {busy && (
-          <span>Cargando los servicios de la categoria {service.name}...</span>
-        )}
+      <div className="container">
+        {busy && <Lottie className="loading" animationData={Loading} />}
         {error && (
           <span>
             Error al cargar los servicios de la categoria {service.name}.

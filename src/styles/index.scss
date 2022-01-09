@@ -17,6 +17,16 @@ body {
   grid-auto-rows: minmax(100px, auto);
 }
 
+.loading {
+  width: 200px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 a {
   text-decoration: none;
   cursor: pointer;

@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
+import Lottie from "lottie-react";
 
 import CategoriesContext from "../context/categoriesContext";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
+import Loading from "../animations/loading-yellow.json";
 
 export default function Home() {
   const { categories } = useContext(CategoriesContext);
@@ -28,7 +30,13 @@ export default function Home() {
         </p>
         <p>Estos estan ordenados en las siguientes Secciones:</p>
       </div>
-      <div className="categories-container">{renderServices()}</div>
+      <div className="categories-container">
+        {categories.length > 0 ? (
+          renderServices()
+        ) : (
+          <Lottie className="loading" animationData={Loading} />
+        )}
+      </div>
     </Layout>
   );
 }

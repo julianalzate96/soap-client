@@ -1,14 +1,23 @@
 import React from "react";
+import Lottie from "lottie-react";
 
 import Input from "./Input";
+import Loading from "../../animations/loading-yellow.json";
 
 import "../../styles/_form.scss";
 
-function Form({ children, onSubmit }) {
+function Form({ children, onSubmit, busy }) {
   return (
     <form className="form" onSubmit={onSubmit}>
       {children}
-      <button type="submit">PROBAR</button>
+      <div className="button-container">
+        {!busy && (
+          <button type="submit" disabled={busy}>
+            PROBAR
+          </button>
+        )}
+        {busy && <Lottie style={{ width: `100px` }} animationData={Loading} />}
+      </div>
     </form>
   );
 }
