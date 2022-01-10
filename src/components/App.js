@@ -36,9 +36,14 @@ export default function App() {
   };
 
   useEffect(() => {
-    fetchServicesInfo("categories", null).then((res) => {
-      setCategories(res);
-    });
+    if (!localStorage.getItem("categories")) {
+      fetchServicesInfo("categories", null).then((res) => {
+        setCategories(res);
+        localStorage.setItem("categories", JSON.stringify(res));
+      });
+    } else {
+      setCategories(JSON.parse(localStorage.getItem("categories")));
+    }
   }, []);
 
   return (

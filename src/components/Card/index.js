@@ -10,12 +10,14 @@ function Card({ category }) {
   const { setService } = useContext(ServiceContext);
 
   const handleOnClick = () => {
-    setService({
+    let data = {
       wsdl: category.wsdl,
       name: category.nombre,
       id: category.id_categoria,
       description: category.descripcion,
-    });
+    };
+    setService(data);
+    localStorage.setItem("service", JSON.stringify(data));
   };
 
   return (

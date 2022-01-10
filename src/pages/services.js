@@ -12,7 +12,7 @@ import Loading from "../animations/loading-yellow.json";
 import "../styles/index.scss";
 
 export default function Services() {
-  const { service } = useContext(ServiceContext);
+  const { service, setService } = useContext(ServiceContext);
   const [services, setServices] = useState([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
@@ -75,10 +75,10 @@ export default function Services() {
   };
 
   useEffect(() => {
-    fetchCurrentCategoryServices(service);
-  }, [service]);
-
-  console.log(service);
+    let data = JSON.parse(localStorage.getItem("service"));
+    setService(data);
+    fetchCurrentCategoryServices(data);
+  }, []);
 
   return (
     <Layout>
