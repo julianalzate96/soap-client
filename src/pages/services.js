@@ -76,9 +76,15 @@ export default function Services() {
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem("service"));
-    setService(data);
-    fetchCurrentCategoryServices(data);
+    if (data) {
+      setService(data);
+      fetchCurrentCategoryServices(data);
+    }
   }, []);
+
+  if (!service.id) {
+    window.location.replace(window.location.origin);
+  }
 
   return (
     <Layout>

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import XMLViewer from "react-xml-viewer";
-import ServiceContext from "../context/serviceContext";
 
 const customTheme = {
   overflowBreak: true,
@@ -8,10 +7,19 @@ const customTheme = {
 };
 
 export default function Xml() {
-  const { service } = useContext(ServiceContext);
+  const [currentXML, setCurrentXML] = useState("");
+
+  useEffect(() => {
+    setCurrentXML(localStorage.getItem("currentXML"));
+  }, []);
+
+  if (!currentXML) {
+    return <span>No hay un XML para renderizar</span>;
+  }
+
   return (
     <XMLViewer
-      xml={service.currentXML}
+      xml={currentXML}
       theme={customTheme}
       collapsible
       indentSize={1}

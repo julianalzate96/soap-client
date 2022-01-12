@@ -41,11 +41,7 @@ export default function Modal({ selectedService, setShowModal }) {
       headers: { "Content-Type": "application/xml" },
       data,
       success: function (soapResponse) {
-        console.log(soapResponse);
-        setService((prev) => ({
-          ...prev,
-          currentXML: soapResponse.toString(),
-        }));
+        localStorage.setItem("currentXML", soapResponse.toString());
         setResponse(soapResponse);
         setBusy(false);
       },
@@ -85,7 +81,11 @@ export default function Modal({ selectedService, setShowModal }) {
           <Form onSubmit={onSubmit} busy={busy}>
             {renderInputs()}
           </Form>
-          {response && <Link to="/xml">Ver Respuesta en XML</Link>}
+          {response && (
+            <Link to="/xml" target="_blank">
+              Ver Respuesta en XML
+            </Link>
+          )}
           {error && <span>Error al probar el servicio.</span>}
           <div className="xml-container">
             <p className="text">
