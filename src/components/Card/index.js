@@ -11,7 +11,6 @@ function Card({ category }) {
 
   const handleOnClick = () => {
     let data = {
-      wsdl: category.wsdl,
       name: category.nombre,
       id: category.id_categoria,
       description: category.descripcion,
@@ -24,10 +23,6 @@ function Card({ category }) {
     <div className="card">
       <h2>{category.nombre}</h2>
       <p>{category.descripcion}</p>
-      <span>aqui podra ver el WSDL.</span>
-      <a className="wsdl" href={category.wsdl} target="_blank" rel="noreferrer">
-        {category.wsdl}
-      </a>
       <Link
         className="services-button"
         to={`/${category.nombre.replace(/\s/g, "-").toLowerCase()}`}

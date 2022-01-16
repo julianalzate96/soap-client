@@ -2,7 +2,6 @@
 
 .card {
   @include card();
-  width: 28%;
 
   h2 {
     color: #196844;

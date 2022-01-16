@@ -5,7 +5,9 @@ body {
 }
 
 .categories-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40% 40%;
+  row-gap: 20px;
   justify-content: space-evenly;
   margin: 30px 0;
 }
