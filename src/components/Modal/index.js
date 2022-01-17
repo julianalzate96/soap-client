@@ -1,12 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import _soap from "jquery.soap";
+import soap from "soap-everywhere";
 import XMLViewer from "react-xml-viewer";
 
 import ClickHandler from "../../hooks/clickHandler";
 import Layout from "./layout";
 import Form from "../Form";
-import serviceContext from "../../context/serviceContext";
 
 const customTheme = {
   overflowBreak: true,
@@ -14,8 +14,8 @@ const customTheme = {
 };
 
 export default function Modal({ selectedService, setShowModal }) {
-  const { service, setService } = useContext(serviceContext);
   const [response, setResponse] = useState(null);
+  const [inputs, setInputs] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Modal({ selectedService, setShowModal }) {
     }
 
     _soap({
-      url: service.wsdl,
+      url: selectedService.wsdl,
       method: selectedService.name,
       headers: { "Content-Type": "application/xml" },
       data,
@@ -54,12 +54,12 @@ export default function Modal({ selectedService, setShowModal }) {
   };
 
   const renderInputs = () => {
-    if (selectedService.input) {
-      return Object.keys(selectedService.input).map((input, i) => {
+    if (inputs) {
+      return Object.keys(inputs).map((input, i) => {
         return (
           <Form.Input
             key={i}
-            type={selectedService.input[input].replace("xsd:", "")}
+            type={inputs[input].replace("xsd:", "")}
             label={input}
           />
         );
@@ -69,6 +69,28 @@ export default function Modal({ selectedService, setShowModal }) {
     }
   };
 
+  useEffect(() => {
+    soap.createClient(selectedService.wsdl, (err, client) => {
+      let response = null;
+      if (err) {
+        console.log("ERROR: ", err);
+        setError(true);
+      }
+      response = client.describe();
+
+      if (response) {
+        setInputs(
+          response[selectedService.nombre][`${selectedService.nombre}Port`][
+            selectedService.nombre
+          ].input
+        );
+      }
+    });
+    return () => {
+      console.log("unmount");
+    };
+  }, []);
+
   return (
     <Layout>
       <ClickHandler action={setShowModal}>
@@ -76,8 +98,8 @@ export default function Modal({ selectedService, setShowModal }) {
           <span className="close" onClick={setShowModal}>
             Cerrar
           </span>
-          <h2>{selectedService.name}</h2>
-          <p>{selectedService.description}</p>
+          <h2>{selectedService.nombre}</h2>
+          <p>{selectedService.descripcion}</p>
           <Form onSubmit={onSubmit} busy={busy}>
             {renderInputs()}
           </Form>
@@ -116,6 +138,7 @@ export default function Modal({ selectedService, setShowModal }) {
             )}
           </div>
         </div>
+        <span>LOL</span>
       </ClickHandler>
     </Layout>
   );
