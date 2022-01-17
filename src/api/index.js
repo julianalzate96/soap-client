@@ -9,5 +9,6 @@ export const fetchServicesInfo = (type, category) => {
     .catch(function (error) {
       // handle error
       console.log(error);
+      return error;
     });
 };
