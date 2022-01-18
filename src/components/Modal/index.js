@@ -24,7 +24,7 @@ export default function Modal({ selectedService, setShowModal }) {
     setBusy(true);
     let data = {};
 
-    if (selectedService.input) {
+    if (inputs) {
       for (let i = 0; i < e.target.elements.length; i++) {
         if (e.target.elements[i].nodeName !== "BUTTON") {
           data = {
@@ -37,7 +37,7 @@ export default function Modal({ selectedService, setShowModal }) {
 
     _soap({
       url: selectedService.wsdl,
-      method: selectedService.name,
+      method: selectedService.nombre,
       headers: { "Content-Type": "application/xml" },
       data,
       success: function (soapResponse) {
@@ -138,7 +138,6 @@ export default function Modal({ selectedService, setShowModal }) {
             )}
           </div>
         </div>
-        <span>LOL</span>
       </ClickHandler>
     </Layout>
   );
