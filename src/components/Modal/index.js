@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import _soap from "jquery.soap";
 import soap from "soap-everywhere";
 import XMLViewer from "react-xml-viewer";
-
+import { parseString } from "xml2js";
 import ClickHandler from "../../hooks/clickHandler";
 import Layout from "./layout";
 import Form from "../Form";
@@ -42,7 +42,20 @@ export default function Modal({ selectedService, setShowModal }) {
       data,
       success: function (soapResponse) {
         localStorage.setItem("currentXML", soapResponse.toString());
-        setResponse(soapResponse);
+
+        let isArray =
+          soapResponse.content.activeElement.firstChild.firstChild.firstChild
+            .attributes[0].value === "SOAP-ENC:Array";
+
+        let _xml = isArray
+          ? soapResponse.content.activeElement.firstChild.firstChild.firstChild
+              .innerHTML
+          : soapResponse.content.activeElement.firstChild.firstChild.innerHTML;
+        parseString(_xml, function (err, result) {
+          console.log(result);
+        });
+        var xml = soapResponse.toString();
+        setResponse(xml);
         setBusy(false);
       },
       error: function (SOAPResponse) {
@@ -104,9 +117,11 @@ export default function Modal({ selectedService, setShowModal }) {
             {renderInputs()}
           </Form>
           {response && (
-            <Link to="/xml" target="_blank">
-              Ver Respuesta en XML
-            </Link>
+            <div>
+              <Link to="/xml" target="_blank">
+                Ver Respuesta en XML
+              </Link>
+            </div>
           )}
           {error && <span>Error al probar el servicio.</span>}
           <div className="xml-container">
