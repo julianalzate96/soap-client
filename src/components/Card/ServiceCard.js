@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "../../styles/_service_card.scss";
 
 export default function ServiceCard({ service, onClick }) {
-  let isPrivado = service.privado === "1";
+  const [isPrivado, setIsPrivado] = useState(false);
+  useEffect(() => {
+    let _isPrivado = localStorage.getItem("token")
+      ? false
+      : service.privado === "1";
+
+    setIsPrivado(_isPrivado);
+  }, [localStorage]);
   return (
     <div
       className={`service-card ${isPrivado ? `priv-service` : ``}`}
