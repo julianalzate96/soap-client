@@ -40,6 +40,9 @@ export default function Modal({ selectedService, setShowModal }) {
       method: selectedService.nombre,
       headers: { "Content-Type": "application/xml" },
       data,
+      HTTPHeaders: {
+        Authorization: localStorage.getItem("token"),
+      },
       success: function (soapResponse) {
         localStorage.setItem("currentXML", soapResponse.toString());
 
@@ -137,7 +140,12 @@ export default function Modal({ selectedService, setShowModal }) {
           </span>
           <h2>{selectedService.nombre}</h2>
           <p>{selectedService.descripcion}</p>
-          <Form onSubmit={onSubmit} busy={busy}>
+          <Form
+            onSubmit={onSubmit}
+            busy={busy}
+            buttonLabel="PROBAR"
+            buttonTitle="Ejecuta la peticion al servicio web"
+          >
             {renderInputs()}
           </Form>
           {response && (
