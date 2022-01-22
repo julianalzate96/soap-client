@@ -6,9 +6,10 @@ export default function Input({ label, type }) {
       <label htmlFor={label}>{label}</label>
       <input
         id={label}
-        type={type === "string" ? "text" : "number"}
+        type={type === "email" ? type : type === "string" ? "text" : "number"}
         name={label}
         placeholder={label}
+        required
       />
     </div>
   );

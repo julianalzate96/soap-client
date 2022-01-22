@@ -18,8 +18,9 @@
     display: inline-block;
     button {
       margin-top: 10px;
-      width: 100px;
+      min-width: 100px;
       background-color: #196844;
+      border: 1px solid #0d3d28;
       border-radius: 10px;
       color: white;
       font-size: 1rem;

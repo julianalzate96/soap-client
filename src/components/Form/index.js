@@ -6,14 +6,14 @@ import Loading from "../../animations/loading-yellow.json";
 
 import "../../styles/_form.scss";
 
-function Form({ children, onSubmit, busy }) {
+function Form({ children, onSubmit, busy, buttonLabel, buttonTitle }) {
   return (
     <form className="form" onSubmit={onSubmit}>
       {children}
       <div className="button-container">
         {!busy && (
-          <button type="submit" disabled={busy}>
-            PROBAR
+          <button type="submit" disabled={busy} title={buttonTitle}>
+            {buttonLabel}
           </button>
         )}
         {busy && <Lottie style={{ width: `100px` }} animationData={Loading} />}
