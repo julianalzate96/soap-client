@@ -15,9 +15,44 @@
   }
 
   .logo-apit-container {
+    display: flex;
+    align-items: center;
+
+    span {
+      color: #c9c918;
+      font-weight: bold;
+      margin-right: 30px;
+    }
+
+    button {
+      margin-right: 30px;
+      color: white;
+      font-weight: bold;
+      background-color: #c9c918;
+      border: 1px solid #acac10;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.5s;
+
+      &:hover {
+        border: 1px solid white;
+        background-color: transparent;
+      }
+    }
+
     img {
-      height: 100px;
+      height: 104px;
       width: 100px;
     }
+  }
+
+  .auth-form {
+    position: absolute;
+    right: 100px;
+    top: 100px;
+    background-color: white;
+    box-shadow: 0 1px 10px #888888;
+    padding: 30px 20px 0px;
   }
 }
