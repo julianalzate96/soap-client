@@ -17,9 +17,17 @@
   .body {
     max-width: 1110px;
     background-color: white;
-    padding: 15px;
+    padding: 15px 30px;
     border-radius: 10px;
     position: relative;
+    overflow-y: scroll;
+    max-height: 90vh;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     .close {
       position: absolute;

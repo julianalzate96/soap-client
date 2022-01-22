@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import _soap from "jquery.soap";
 import soap from "soap-everywhere";
@@ -43,19 +43,12 @@ export default function Modal({ selectedService, setShowModal }) {
       success: function (soapResponse) {
         localStorage.setItem("currentXML", soapResponse.toString());
 
-        let isArray =
-          soapResponse.content.activeElement.firstChild.firstChild.firstChild
-            .attributes[0].value === "SOAP-ENC:Array";
+        let _xml =
+          soapResponse.content.activeElement.firstChild.firstChild.innerHTML;
 
-        let _xml = isArray
-          ? soapResponse.content.activeElement.firstChild.firstChild.firstChild
-              .innerHTML
-          : soapResponse.content.activeElement.firstChild.firstChild.innerHTML;
         parseString(_xml, function (err, result) {
-          console.log(result);
+          setResponse(result.return);
         });
-        var xml = soapResponse.toString();
-        setResponse(xml);
         setBusy(false);
       },
       error: function (SOAPResponse) {
@@ -82,6 +75,34 @@ export default function Modal({ selectedService, setShowModal }) {
     }
   };
 
+  const renderJsonResponse = useCallback(() => {
+    let type = Object.keys(response).find((key) => key === "item");
+
+    return Object.keys(response).map((key, i) => {
+      if (key !== "$") {
+        if (type) {
+          return response.item.map((item) => {
+            return Object.keys(item).map((key, i) => {
+              if (key !== "$") {
+                return (
+                  <span
+                    key={`${i}${key}${item[key][0]._}`}
+                  >{`${key}: ${item[key][0]._}`}</span>
+                );
+              } else {
+                return <span key={`line${i}`}>-----------</span>;
+              }
+            });
+          });
+        } else {
+          return <span key={i}>{`${key}: ${response[key][0]._}`}</span>;
+        }
+      } else {
+        return null;
+      }
+    });
+  }, [response]);
+
   useEffect(() => {
     soap.createClient(selectedService.wsdl, (err, client) => {
       let response = null;
@@ -99,9 +120,6 @@ export default function Modal({ selectedService, setShowModal }) {
         );
       }
     });
-    return () => {
-      console.log("unmount");
-    };
   }, []);
 
   return (
@@ -117,11 +135,12 @@ export default function Modal({ selectedService, setShowModal }) {
             {renderInputs()}
           </Form>
           {response && (
-            <div>
+            <section>
+              <div>{renderJsonResponse()}</div>
               <Link to="/xml" target="_blank">
                 Ver Respuesta en XML
               </Link>
-            </div>
+            </section>
           )}
           {error && <span>Error al probar el servicio.</span>}
           <div className="xml-container">

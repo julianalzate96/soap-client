@@ -6,7 +6,9 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "add": "^2.0.6",
     "axios": "^0.24.0",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "jquery-xml2json": "^0.0.8",
     "jquery.soap": "^1.7.3",
     "lottie-react": "^2.1.0",
@@ -21,7 +23,8 @@
     "web-vitals": "^1.1.2",
     "xml-parse-from-string": "^1.0.1",
     "xml-to-json": "^0.1.1",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "yarn": "^1.22.17"
   },
   "scripts": {
     "start": "react-scripts start",
