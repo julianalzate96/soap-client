@@ -85,17 +85,23 @@ export default function Modal({ selectedService, setShowModal }) {
             return Object.keys(item).map((key, i) => {
               if (key !== "$") {
                 return (
-                  <span
-                    key={`${i}${key}${item[key][0]._}`}
-                  >{`${key}: ${item[key][0]._}`}</span>
+                  <span key={`${i}${key}${item[key][0]._}`}>
+                    <strong>{key}</strong>
+                    {`: ${item[key][0]._}`}
+                  </span>
                 );
               } else {
-                return <span key={`line${i}`}>-----------</span>;
+                return <div key={`line${i}`} className="line" />;
               }
             });
           });
         } else {
-          return <span key={i}>{`${key}: ${response[key][0]._}`}</span>;
+          return (
+            <span key={i}>
+              <strong>{key}</strong>
+              {`: ${response[key][0]._}`}
+            </span>
+          );
         }
       } else {
         return null;
@@ -135,17 +141,24 @@ export default function Modal({ selectedService, setShowModal }) {
             {renderInputs()}
           </Form>
           {response && (
-            <section>
-              <div>{renderJsonResponse()}</div>
-              <Link to="/xml" target="_blank">
-                Ver Respuesta en XML
-              </Link>
+            <section className="response-container">
+              <div className="json-container">{renderJsonResponse()}</div>
+              <div className="line" />
+              <div>
+                <span>
+                  Si desea acceder a la respuesta en XML puede consultar en el
+                  siguiente enlace:{" "}
+                </span>
+                <Link to="/xml" target="_blank">
+                  Ver Respuesta en XML
+                </Link>
+              </div>
             </section>
           )}
           {error && <span>Error al probar el servicio.</span>}
           <div className="xml-container">
             <p className="text">
-              A continuación se muestra un ejemplo de solicitud en XML
+              A continuación se muestra la estrutura de la solicitud en XML
             </p>
             {selectedService.xml_entradas && (
               <XMLViewer
@@ -159,7 +172,7 @@ export default function Modal({ selectedService, setShowModal }) {
           </div>
           <div className="xml-container">
             <p className="text">
-              A continuación se muestra un ejemplo de respuesta en XML
+              A continuación se muestra la estructura de la respuesta en XML
             </p>
             {selectedService.xml_respuestas && (
               <XMLViewer

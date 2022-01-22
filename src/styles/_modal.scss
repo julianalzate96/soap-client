@@ -41,6 +41,32 @@
       color: #196844;
     }
 
+    .response-container {
+      display: flex;
+      flex-direction: column;
+
+      .json-container {
+        display: flex;
+        flex-direction: column;
+
+        span {
+          margin-bottom: 10px;
+        }
+      }
+
+      .line {
+        height: 2px;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        background-color: #c9c918;
+
+        &:first-child {
+          display: none;
+        }
+      }
+    }
+
     .xml-container {
       margin-bottom: 30px;
       .text {
