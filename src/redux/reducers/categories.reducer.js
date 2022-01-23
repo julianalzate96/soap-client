@@ -24,7 +24,7 @@ const categoriesReducer = (state = initialState, action) => {
         error: false,
       };
     case FETCH_CATEGORIES_FAILURE:
-      return { ...state, error: true };
+      return { ...state, error: true, loading: false };
     case SET_CURRENT_CATEGORY:
       return { ...state, current: action.payload };
     default:

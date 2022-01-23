@@ -24,7 +24,7 @@ const servicesReducer = (state = initialState, action) => {
         error: false,
       };
     case FETCH_SERVICES_FAILURE:
-      return { ...state, error: true };
+      return { ...state, error: true, loading: false };
     case SET_CURRENT_XML:
       return { ...state, xml: action.payload };
     default:
