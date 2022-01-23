@@ -1,31 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
-import ServiceContext, { defaultValue } from "../context/serviceContext";
-import CategoriesContext from "../context/categoriesContext";
+import React, { useEffect, useCallback } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Services from "../pages/services";
 import Home from "../pages/home";
-
-import { fetchServicesInfo } from "../api";
 import Xml from "../pages/xml";
 
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategoriesAction } from "../redux/actions/category.actions";
+
 export default function App() {
-  const [service, setService] = useState(defaultValue);
-  const [categories, setCategories] = useState([]);
-
-  const values = useMemo(
-    () => ({ service, setService }),
-    [service, setService]
-  );
-
-  const categoriesValues = useMemo(
-    () => ({ categories, setCategories }),
-    [categories, setCategories]
-  );
+  const categories = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
 
   const renderCategoryRoutes = () => {
-    return categories.map((category, i) => {
+    return categories.data.map((category, i) => {
       let path = category.nombre.replace(/\s/g, "-").toLowerCase();
       return (
         <React.Fragment key={i}>
@@ -36,27 +24,16 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("categories")) {
-      fetchServicesInfo("categories", null).then((res) => {
-        setCategories(res);
-        localStorage.setItem("categories", JSON.stringify(res));
-      });
-    } else {
-      setCategories(JSON.parse(localStorage.getItem("categories")));
+    if (window.location.pathname === "/" && categories.data.length === 0) {
+      dispatch(fetchCategoriesAction());
     }
   }, []);
 
   return (
-    <Router>
-      <CategoriesContext.Provider value={categoriesValues}>
-        <ServiceContext.Provider value={values}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            {renderCategoryRoutes()}
-            <Route path="/xml" element={<Xml />} />
-          </Routes>
-        </ServiceContext.Provider>
-      </CategoriesContext.Provider>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      {renderCategoryRoutes()}
+      <Route path="/xml" element={<Xml />} />
+    </Routes>
   );
 }
