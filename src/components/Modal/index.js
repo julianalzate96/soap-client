@@ -4,9 +4,12 @@ import _soap from "jquery.soap";
 import soap from "soap-everywhere";
 import XMLViewer from "react-xml-viewer";
 import { parseString } from "xml2js";
+
 import ClickHandler from "../../hooks/clickHandler";
 import Layout from "./layout";
 import Form from "../Form";
+import { useDispatch } from "react-redux";
+import { setCurrentXml } from "../../redux/actions/services.action";
 
 const customTheme = {
   overflowBreak: true,
@@ -18,6 +21,7 @@ export default function Modal({ selectedService, setShowModal }) {
   const [inputs, setInputs] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
+  const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -44,7 +48,7 @@ export default function Modal({ selectedService, setShowModal }) {
         Authorization: localStorage.getItem("token"),
       },
       success: function (soapResponse) {
-        localStorage.setItem("currentXML", soapResponse.toString());
+        dispatch(setCurrentXml(soapResponse.toString()));
 
         let _xml =
           soapResponse.content.activeElement.firstChild.firstChild.innerHTML;
