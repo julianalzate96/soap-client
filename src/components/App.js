@@ -1,17 +1,18 @@
-import React, { useEffect, useCallback } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, Redirect, useLocation } from "react-router-dom";
 
 import Services from "../pages/services";
 import Home from "../pages/home";
 import Xml from "../pages/xml";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategoriesAction } from "../redux/actions/category.actions";
+import { fetchCategoriesAction } from "../redux/actions/categories.actions";
 import { transformTitleToPath } from "../utils";
 
 export default function App() {
   const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const renderCategoryRoutes = () => {
     return categories.data.map((category, i) => {
@@ -26,8 +27,12 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (window.location.pathname === "/" && categories.data.length === 0) {
-      dispatch(fetchCategoriesAction());
+    if (categories.data.length === 0) {
+      if (location.pathname === "/") {
+        dispatch(fetchCategoriesAction());
+      } else {
+        window.location.replace("/");
+      }
     }
   }, []);
 
