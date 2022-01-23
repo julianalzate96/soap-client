@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { transformTitleToPath } from "../../utils";
-import { setCurrentCategory } from "../../redux/actions/category.actions";
+import { setCurrentCategory } from "../../redux/actions/categories.actions";
 import ServiceCard from "./ServiceCard";
 
 import "../../styles/_card.scss";
+import { fetchServicesAction } from "../../redux/actions/services.action";
 
 function Card({ category }) {
   const dispatch = useDispatch();
@@ -14,10 +15,10 @@ function Card({ category }) {
   const handleOnClick = () => {
     let data = {
       name: category.nombre,
-      id: category.id_categoria,
       description: category.descripcion,
     };
     dispatch(setCurrentCategory(data));
+    dispatch(fetchServicesAction(category.id_categoria));
   };
 
   return (
