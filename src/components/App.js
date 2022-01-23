@@ -15,11 +15,7 @@ export default function App() {
   const renderCategoryRoutes = () => {
     return categories.data.map((category, i) => {
       let path = category.nombre.replace(/\s/g, "-").toLowerCase();
-      return (
-        <React.Fragment key={i}>
-          <Route path={`/${path}`} element={<Services />} />
-        </React.Fragment>
-      );
+      return <Route key={i} path={`/${path}`} element={<Services />} />;
     });
   };
 
