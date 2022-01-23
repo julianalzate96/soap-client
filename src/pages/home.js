@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import Card from "../components/Card";
 
 import Loading from "../animations/loading-yellow.json";
-import { setCurrentCategory } from "../redux/actions/category.actions";
+import { setCurrentCategory } from "../redux/actions/categories.actions";
 
 export default function Home() {
   const {

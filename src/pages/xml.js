@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import XMLViewer from "react-xml-viewer";
 
 const customTheme = {
@@ -7,22 +8,15 @@ const customTheme = {
 };
 
 export default function Xml() {
-  const [currentXML, setCurrentXML] = useState("");
+  const { xml } = useSelector((state) => state.services);
 
   useEffect(() => {
-    setCurrentXML(localStorage.getItem("currentXML"));
+    console.log(xml);
   }, []);
 
-  if (!currentXML) {
+  if (!xml) {
     return <span>No hay un XML para renderizar</span>;
   }
 
-  return (
-    <XMLViewer
-      xml={currentXML}
-      theme={customTheme}
-      collapsible
-      indentSize={1}
-    />
-  );
+  return <XMLViewer xml={xml} theme={customTheme} collapsible indentSize={1} />;
 }
