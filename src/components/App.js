@@ -7,6 +7,7 @@ import Xml from "../pages/xml";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategoriesAction } from "../redux/actions/category.actions";
+import { transformTitleToPath } from "../utils";
 
 export default function App() {
   const categories = useSelector((state) => state.categories);
@@ -14,8 +15,13 @@ export default function App() {
 
   const renderCategoryRoutes = () => {
     return categories.data.map((category, i) => {
-      let path = category.nombre.replace(/\s/g, "-").toLowerCase();
-      return <Route key={i} path={`/${path}`} element={<Services />} />;
+      return (
+        <Route
+          key={i}
+          path={`/${transformTitleToPath(category.nombre)}`}
+          element={<Services />}
+        />
+      );
     });
   };
 
