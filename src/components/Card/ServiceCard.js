@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import "../../styles/_service_card.scss";
 
 export default function ServiceCard({ service, onClick }) {
-  const [isPrivado, setIsPrivado] = useState(false);
-  useEffect(() => {
-    let _isPrivado = localStorage.getItem("token")
-      ? false
-      : service.privado === "1";
+  const { token } = useSelector((state) => state.token);
 
-    setIsPrivado(_isPrivado);
-  }, [localStorage]);
+  const isPrivate = service.privado === "1";
+
   return (
     <div
-      className={`service-card ${isPrivado ? `priv-service` : ``}`}
-      onClick={!isPrivado ? onClick : () => {}}
+      className={`service-card ${!token && isPrivate ? `priv-service` : ``}`}
+      onClick={!isPrivate ? onClick : token ? onClick : () => {}}
     >
       <h3>{service.nombre}</h3>
       <p>
@@ -23,14 +20,18 @@ export default function ServiceCard({ service, onClick }) {
       </p>
       <a
         className="wsdl"
-        href={!isPrivado ? `#privado` : service.wsdl}
+        href={!isPrivate ? service.wsdl : token ? service.wsdl : `#privado`}
         target="_blank"
         rel="noreferrer"
       >
-        {!isPrivado ? service.wsdl : `WSDL NO DISPONIBLE`}
+        {!isPrivate
+          ? service.wsdl
+          : token
+          ? service.wsdl
+          : `WSDL NO DISPONIBLE`}
       </a>
 
-      {isPrivado && (
+      {!token && isPrivate && (
         <span>
           <strong>PRIVADO</strong>
         </span>

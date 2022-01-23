@@ -1,52 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getServicesToken } from "../../api";
+import { fetchToken } from "../../redux/actions/token.action";
 
 import Form from "../Form";
 
 import APIT from "../../images/APIT-logo.jpeg";
 import "../../styles/_header.scss";
-import { getServicesToken } from "../../api";
 
 export default function Header() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
+  const { token, loading, error, email } = useSelector((state) => state.token);
+  const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
-  const [email, setEmail] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setBusy(true);
 
     var data = new FormData();
-
-    setEmail(e.target.elements["Correo institucional"].value);
-
     data.append("email", e.target.elements["Correo institucional"].value);
 
-    getServicesToken(data).then((res) => {
-      if (res) {
-        localStorage.setItem("token", res);
-        localStorage.setItem(
-          "email",
-          e.target.elements["Correo institucional"].value
-        );
-        setIsAuth(true);
-      } else {
-        setError(true);
-      }
-      setBusy(false);
-    });
+    dispatch(fetchToken(data, e.target.elements["Correo institucional"].value));
   };
 
   const handleShowForm = () => {
     setShowForm((prev) => !prev);
   };
-
-  useEffect(() => {
-    setIsAuth(localStorage.getItem("token"));
-    setEmail(localStorage.getItem("email"));
-  }, [localStorage]);
 
   return (
     <header className="header">
@@ -59,7 +39,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="logo-apit-container">
-        {isAuth ? (
+        {token ? (
           <span>{email}</span>
         ) : (
           <button
@@ -77,11 +57,11 @@ export default function Header() {
           <img src={APIT} alt="Logo APIT" />
         </a>
       </div>
-      {showForm && !isAuth && (
+      {showForm && !token && (
         <div className="auth-form">
           <Form
             onSubmit={onSubmit}
-            busy={busy}
+            busy={loading}
             buttonLabel="SOLICITAR TOKEN"
             buttonTitle="Solicita un token para poder consultar los servicios privados."
           >

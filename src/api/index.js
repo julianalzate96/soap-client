@@ -10,6 +10,11 @@ import {
   fetchServicesRequest,
   fetchServicesSuccess,
 } from "../redux/actions/services.action";
+import {
+  fetchTokenFailure,
+  fetchTokenRequest,
+  fetchTokenSuccess,
+} from "../redux/actions/token.action";
 
 export const HEROKU_URL = "https://frozen-river-98217.herokuapp.com";
 
@@ -40,15 +45,17 @@ export const fetchServices = (dispatch, id_category) => {
     });
 };
 
-export const getServicesToken = (data) => {
+export const getServicesToken = (dispatch, data, email) => {
+  dispatch(fetchTokenRequest());
   axios({
     url: `${HEROKU_URL}/auth.php`,
     method: "POST",
     data,
   })
-    .then((response) => response.data)
+    .then((response) => {
+      dispatch(fetchTokenSuccess({ email, token: response.data }));
+    })
     .catch((error) => {
-      // handle error
-      console.log(error);
+      dispatch(fetchTokenFailure());
     });
 };
