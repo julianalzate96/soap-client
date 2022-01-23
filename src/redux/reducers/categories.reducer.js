@@ -3,7 +3,7 @@ import {
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
   SET_CURRENT_CATEGORY,
-} from "../types/category.types";
+} from "../types/categories.types";
 
 const initialState = {
   data: [],
