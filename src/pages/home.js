@@ -1,11 +1,12 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Lottie from "lottie-react";
 
 import Layout from "../components/Layout";
 import Card from "../components/Card";
 
 import Loading from "../animations/loading-yellow.json";
+import { setCurrentCategory } from "../redux/actions/category.actions";
 
 export default function Home() {
   const {
@@ -13,6 +14,7 @@ export default function Home() {
     error,
     data: categories,
   } = useSelector((state) => state.categories);
+  const dispatch = useDispatch();
 
   const renderServices = () => {
     if (loading) {
@@ -22,6 +24,10 @@ export default function Home() {
       <Card key={i} category={category} />
     ));
   };
+
+  useEffect(() => {
+    dispatch(setCurrentCategory({}));
+  }, []);
 
   return (
     <Layout>

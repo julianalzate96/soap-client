@@ -3,6 +3,7 @@ import {
   FETCH_CATEGORIES_FAILURE,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
+  SET_CURRENT_CATEGORY,
 } from "../types/category.types";
 
 export const fetchCategoriesAction = () => {
@@ -27,5 +28,12 @@ export const fetchCategoriesRequest = () => {
 export const fetchCategoriesFailure = () => {
   return {
     type: FETCH_CATEGORIES_FAILURE,
+  };
+};
+
+export const setCurrentCategory = (currentCategory) => {
+  return {
+    type: SET_CURRENT_CATEGORY,
+    payload: currentCategory,
   };
 };

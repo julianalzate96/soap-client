@@ -2,12 +2,14 @@ import {
   FETCH_CATEGORIES_FAILURE,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
+  SET_CURRENT_CATEGORY,
 } from "../types/category.types";
 
 const initialState = {
   data: [],
   loading: false,
   error: false,
+  current: {},
 };
 
 const categoriesReducer = (state = initialState, action) => {
@@ -23,6 +25,8 @@ const categoriesReducer = (state = initialState, action) => {
       };
     case FETCH_CATEGORIES_FAILURE:
       return { ...state, error: true };
+    case SET_CURRENT_CATEGORY:
+      return { ...state, current: action.payload };
     default:
       return state;
   }

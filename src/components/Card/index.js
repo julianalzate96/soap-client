@@ -1,13 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import ServiceContext from "../../context/serviceContext";
+import { transformTitleToPath } from "../../utils";
+import { setCurrentCategory } from "../../redux/actions/category.actions";
 import ServiceCard from "./ServiceCard";
 
 import "../../styles/_card.scss";
 
 function Card({ category }) {
-  const { setService } = useContext(ServiceContext);
+  const dispatch = useDispatch();
 
   const handleOnClick = () => {
     let data = {
@@ -15,8 +17,7 @@ function Card({ category }) {
       id: category.id_categoria,
       description: category.descripcion,
     };
-    setService(data);
-    localStorage.setItem("service", JSON.stringify(data));
+    dispatch(setCurrentCategory(data));
   };
 
   return (
@@ -25,7 +26,7 @@ function Card({ category }) {
       <p>{category.descripcion}</p>
       <Link
         className="services-button"
-        to={`/${category.nombre.replace(/\s/g, "-").toLowerCase()}`}
+        to={`/${transformTitleToPath(category.nombre)}`}
         onClick={handleOnClick}
       >
         Ver Servicios
