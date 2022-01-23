@@ -1,15 +1,23 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import Lottie from "lottie-react";
 
-import CategoriesContext from "../context/categoriesContext";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
+
 import Loading from "../animations/loading-yellow.json";
 
 export default function Home() {
-  const { categories } = useContext(CategoriesContext);
+  const {
+    loading,
+    error,
+    data: categories,
+  } = useSelector((state) => state.categories);
 
   const renderServices = () => {
+    if (loading) {
+      return <Lottie className="loading" animationData={Loading} />;
+    }
     return categories.map((category, i) => (
       <Card key={i} category={category} />
     ));
@@ -30,13 +38,7 @@ export default function Home() {
         </p>
         <p>Estos estan ordenados en las siguientes Secciones:</p>
       </div>
-      <div className="categories-container">
-        {categories.length > 0 ? (
-          renderServices()
-        ) : (
-          <Lottie className="loading" animationData={Loading} />
-        )}
-      </div>
+      <div className="categories-container">{renderServices()}</div>
     </Layout>
   );
 }
