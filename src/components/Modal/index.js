@@ -161,9 +161,7 @@ export default function Modal({ selectedService, setShowModal }) {
                   Si desea acceder a la respuesta en XML puede consultar en el
                   siguiente enlace:{" "}
                 </span>
-                <Link to="/xml" target="_blank">
-                  Ver Respuesta en XML
-                </Link>
+                <Link to="/xml">Ver Respuesta en XML</Link>
               </div>
             </section>
           )}
