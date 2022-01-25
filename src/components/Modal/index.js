@@ -8,7 +8,7 @@ import { parseString } from "xml2js";
 import ClickHandler from "../../hooks/clickHandler";
 import Layout from "./layout";
 import Form from "../Form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentXml } from "../../redux/actions/services.action";
 
 const customTheme = {
@@ -21,6 +21,7 @@ export default function Modal({ selectedService, setShowModal }) {
   const [inputs, setInputs] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
+  const { token } = useSelector((state) => state.token);
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
@@ -45,13 +46,13 @@ export default function Modal({ selectedService, setShowModal }) {
       headers: { "Content-Type": "application/xml" },
       data,
       HTTPHeaders: {
-        Authorization: localStorage.getItem("token"),
+        Authorization: token,
       },
       success: function (soapResponse) {
         dispatch(setCurrentXml(soapResponse.toString()));
 
         let _xml =
-          soapResponse.content.activeElement.firstChild.firstChild.innerHTML;
+          soapResponse.content.documentElement.firstChild.firstChild.innerHTML;
 
         parseString(_xml, function (err, result) {
           setResponse(result.return);
