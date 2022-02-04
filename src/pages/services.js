@@ -45,7 +45,9 @@ export default function Services() {
         {loading && (
           <Lottie className="loading" animationData={Loading} loop={true} />
         )}
-        <div className="services-container">{renderServices()}</div>
+        {!loading && (
+          <div className="services-container">{renderServices()}</div>
+        )}
         {showModal && (
           <Modal
             selectedService={selectedService}

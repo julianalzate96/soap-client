@@ -48,7 +48,9 @@ export default function Home() {
           animationData={Loading}
         />
       )}
-      <div className="categories-container">{renderServices()}</div>
+      {!loading && (
+        <div className="categories-container">{renderServices()}</div>
+      )}
     </Layout>
   );
 }
