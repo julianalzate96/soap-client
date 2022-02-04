@@ -2,7 +2,7 @@ import React from "react";
 
 import "../../styles/_banner.scss";
 
-import IMAGE from "../../images/portal-de-servicios.png";
+import IMAGE from "../../images/portal-de-servicios.jpg";
 
 export default function Banner() {
   return (
