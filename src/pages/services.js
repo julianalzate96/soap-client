@@ -26,10 +26,6 @@ export default function Services() {
   };
 
   const renderServices = () => {
-    if (loading) {
-      return <Lottie className="loading" animationData={Loading} />;
-    }
-
     return services.map((service, i) => {
       return (
         <ServiceCard
@@ -46,6 +42,9 @@ export default function Services() {
       <h1>{category.name}</h1>
       <p>{category.description}</p>
       <div className="container">
+        {loading && (
+          <Lottie className="loading" animationData={Loading} loop={true} />
+        )}
         <div className="services-container">{renderServices()}</div>
         {showModal && (
           <Modal

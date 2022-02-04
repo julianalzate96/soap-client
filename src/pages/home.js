@@ -17,9 +17,6 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const renderServices = () => {
-    if (loading) {
-      return <Lottie className="loading" animationData={Loading} />;
-    }
     return categories.map((category, i) => (
       <Card key={i} category={category} />
     ));
@@ -44,6 +41,13 @@ export default function Home() {
         </p>
         <p>Estos estan ordenados en las siguientes Secciones:</p>
       </div>
+      {loading && (
+        <Lottie
+          className="loading"
+          style={{ margin: `0 auto` }}
+          animationData={Loading}
+        />
+      )}
       <div className="categories-container">{renderServices()}</div>
     </Layout>
   );
